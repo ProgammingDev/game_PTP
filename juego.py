@@ -22,59 +22,82 @@ class Juego():
         self.__mostrar_estadisticas()
    
     def __jugar_ronda(self):
+            #Solicita a los jugadores sus manos
             self.__jugador1.elegir()
             self.__jugador2.elegir()
-
-            eleccion_j1 = list(self.__jugador1.get_eleccion_actual().values())
-            eleccion_j2 = list(self.__jugador2.get_eleccion_actual().values())
             
-            #Determinar y registrar ganador se tendria que llamar determinarYdevolerGanador
-            self.__determinarYregistrar_ganador(eleccion_j1,eleccion_j2)
-            # si hay empate se return __jugar_ronda()
+            #Devuelve la ronda ya evaluada 
+            ronda:Ronda = self.determinar_ronda()
 
-            self.mostrar_resultados()
-            self.__rondasJugadas = self.__rondasJugadas + 1
+            #Registra la ronda en la memoria
+            self.__registrar_ronda(ronda)
 
-    def __determinarYregistrar_ganador(self,eleccion_j1:int,eleccion_cpu:int):
-        # Algoritmo que determina el ganador de la ronda 
-        # el ganador se almacena en una variable para enviar a registrar la ronda al metodo registrar_ronda
 
-        ganador = None 
-        perdedor = None
-        if eleccion_j1[1] < eleccion_cpu[1] :
+            #Muesra los resultados de la ronda 
+            self.__mostrar_resultados(ronda)
+            
+            #Evaluar empate 
+            if(self.__empate and self.evaluar_emapte(ronda)):
+                return self.__jugar_ronda()
+
+            #Finaliza la ronda
+            self.__rondasJugadas += 1
+        
+        
+    def evaluar_emapte(self,ronda:Ronda):
+        if(ronda.ganador == ronda.perderdor):
+            return True
+
+
+
+    def determinar_ronda(self):
+        ganador,perdedor = None,None 
+        
+        #El id devuelve al que esta asociado el nombre de la opcion jugada
+        eleccion_j1_id = self.__jugador1.get_eleccion_actual_id()
+        eleccion_j1_nombre= self.__jugador1.get_eleccion_actual_nombre()
+
+        eleccion_j2_id = self.__jugador2.get_eleccion_actual_id()
+        eleccion_j2_nombre= self.__jugador2.get_eleccion_actual_nombre()
+
+ 
+        
+        if eleccion_j1_id < eleccion_j2_id :
+            ganador,perdedor = self.__jugador1, self.__jugador2
             self.__jugador1.sumar_punto()
-            ganador = self.__jugador1
-            perdedor = self.__jugador2
 
-        elif eleccion_j1[1] == eleccion_cpu[1]:
-            if(self.__empate):
-                return self.__reiniciar_ronda()
-        else :
+       
+        elif eleccion_j1_id > eleccion_j2_id:
+             ganador,perdedor =self.__jugador2,self.__jugador1
              self.__jugador2.sumar_punto()
-             ganador =self.__jugador2
-             perdedor= self.__jugador1
 
-        self.__registrar_ronda(eleccion_j1[0],eleccion_cpu[0],ganador)
-        self.__mostrar_ganador_de_ronda(ganador,perdedor)
+        
+
+        return Ronda(eleccion_j1_nombre,eleccion_j2_nombre,self.__rondasJugadas,ganador,perdedor)
+    
        
    
-    def __registrar_ronda(self,eleccion_j1,eleccion_j2,ganador):
-        ronda = Ronda(eleccion_j1,eleccion_j2,ganador,self.__rondasJugadas)
+    def __registrar_ronda(self,ronda):
         self.__estadisticas.append(ronda)
 
     def __reiniciar_ronda(self):
         self.jugar_ronda()
 
     #Metodos de visualizacion
-    def __mostrar_ganador_de_ronda(self,ganador:Jugador,perdedor:Jugador):
-        if(ganador == perdedor):
+    def __mostrar_ganador_de_ronda(self,ronda:Ronda):
+        ganador,perdedor = ronda.ganador, ronda.perderdor
+        
+        
+        if(ronda.eleccion_j1 == ronda.eleccion_j2 ):
           print('\nParicipantes empatados a jugar de nuevo!!!')
           return
       
         print(f'\nLa ronda numero {self.__rondasJugadas + 1} la gana {ganador.get_nombre()} felicitaciones!!')
         print(f'\nLa proxima sera {perdedor.get_nombre()}')
 
-    def mostrar_resultados(self):
+    def __mostrar_resultados(self,ronda):
+        self.__mostrar_ganador_de_ronda(ronda)
+
         print(" ")
         print('Jugador: ',self.__jugador1.get_puntaje())
         print('CPU: ',self.__jugador2.get_puntaje())
@@ -105,9 +128,13 @@ class Juego():
                 print("Ronda invalida")
 
     def __establecer_empate(self):
-        si_no_empate = input('Desea jugar con empate por cada ronda SI-[S] NO-[N]')
-        if si_no_empate == 'S':
-            self.__empate = True
+        while True:
+            si_no_empate = input('Desea jugar con desempate SI-[S] NO-[N]: ').upper()
+            if si_no_empate == 'S':
+                self.__empate = not(self.__empate)
+                break
+            elif si_no_empate == 'N':
+                break
     
     def __establecer_jugadores(self):
         os.system("cls")
@@ -117,5 +144,5 @@ class Juego():
 
     def __establecer_reglas(self):
         self.__establecer_rondas()
-        """ self.__establecer_empate() """            
+        self.__establecer_empate()        
  

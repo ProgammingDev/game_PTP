@@ -25,16 +25,19 @@ class Jugador(ABC):
     def sumar_punto(self):
        self.__puntaje = self.__puntaje +1 
      # Getters y setters
-     
+
     def get_nombre(self):
         return self.__nombre
 
     def get_opciones(self):
         return self.__opciones
     
-    def get_eleccion_actual(self) -> OpcionRespuesta:
-        return self.__eleccion_actual
+    def get_eleccion_actual_nombre(self):
+        return self.__eleccion_actual.get('opcion')
 
+    def get_eleccion_actual_id(self):
+        return self.__eleccion_actual.get('id')
+    
     def set_eleccion_actual(self, valor):
         self.__eleccion_actual = valor
     
