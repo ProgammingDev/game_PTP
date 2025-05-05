@@ -59,8 +59,6 @@ class Juego():
 
         eleccion_j2_id = self.__jugador2.get_eleccion_actual_id()
         eleccion_j2_nombre= self.__jugador2.get_eleccion_actual_nombre()
-
- 
         
         if eleccion_j1_id < eleccion_j2_id :
             ganador,perdedor = self.__jugador1, self.__jugador2
@@ -71,17 +69,11 @@ class Juego():
              ganador,perdedor =self.__jugador2,self.__jugador1
              self.__jugador2.sumar_punto()
 
-        
-
         return Ronda(eleccion_j1_nombre,eleccion_j2_nombre,self.__rondasJugadas,ganador,perdedor)
-    
-       
+           
    
     def __registrar_ronda(self,ronda):
         self.__estadisticas.append(ronda)
-
-    def __reiniciar_ronda(self):
-        self.jugar_ronda()
 
     #Metodos de visualizacion
     def __mostrar_ganador_de_ronda(self,ronda:Ronda):

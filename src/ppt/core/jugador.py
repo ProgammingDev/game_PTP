@@ -16,12 +16,14 @@ class Jugador(ABC):
             'papel':2,
             'tijera':3
         }
+        self.__userId = 0
 
     @abstractmethod
     def elegir(self):
         raise NotImplementedError("Este método debe ser implementado por la subclase")
     
-
+    
+    
     def sumar_punto(self):
        self.__puntaje = self.__puntaje +1 
      # Getters y setters
@@ -46,6 +48,9 @@ class Jugador(ABC):
 
     def set_puntaje(self, valor):
         self.__puntaje = valor
+
+    def set_id(self,valor):
+        self.__userId = valor
     
 
 
