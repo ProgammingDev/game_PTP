@@ -1,29 +1,32 @@
 import random
-from tipos import OpcionRespuesta
+from ppt.core.tipos import OpcionRespuesta
+from ppt.core.sala import Sala
 from abc import ABC, abstractmethod
 
 class Jugador(ABC):
+    cantidad = 0
+
     @abstractmethod
     def __init__(self, nombre):
         self.__nombre = nombre
-        self.__eleccion_actual = {
+        historial:list[Sala]= []
+        self.__eleccionActual = {
             'opcion':'',
             'id':-1
         }
-        self.__puntaje = 0
-        self.__opciones = {
-            'piedra':1,
-            'papel':2,
-            'tijera':3
-        }
-        self.__userId = 0
+
+        self.sumar_cantidad()
+        
+        
 
     @abstractmethod
     def elegir(self):
         raise NotImplementedError("Este método debe ser implementado por la subclase")
     
-    
-    
+    @classmethod
+    def sumar_cantidad(cls):
+        cls.cantidad += 1
+
     def sumar_punto(self):
        self.__puntaje = self.__puntaje +1 
      # Getters y setters
@@ -35,24 +38,24 @@ class Jugador(ABC):
         return self.__opciones
     
     def get_eleccion_actual_nombre(self):
-        return self.__eleccion_actual.get('opcion')
+        return self.__eleccionActual.get('opcion')
 
     def get_eleccion_actual_id(self):
-        return self.__eleccion_actual.get('id')
+        return self.__eleccionActual.get('id')
     
     def set_eleccion_actual(self, valor):
-        self.__eleccion_actual = valor
+        self.__eleccionActual = valor
     
     def get_puntaje(self):
         return self.__puntaje
 
     def set_puntaje(self, valor):
         self.__puntaje = valor
-
-    def set_id(self,valor):
-        self.__userId = valor
     
 
+    @classmethod
+    def get_cantidad(cls):
+        return  cls.cantidad
 
 class JugadorCPU(Jugador):
     def __init__(self):

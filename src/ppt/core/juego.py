@@ -1,5 +1,5 @@
-from jugador import JugadorHumano, JugadorCPU,Jugador
-from ronda import Ronda
+from ppt.core.jugador import JugadorHumano, JugadorCPU,Jugador
+from ppt.core.ronda import Ronda
 import os
 
 class Juego():
@@ -10,8 +10,8 @@ class Juego():
         self.__rondasTotales = 0
         self.__estadisticas = []
         self.__empate= False
-        self.__establecer_jugadores()
-        self.__establecer_reglas()
+        """ self.__establecer_jugadores()
+        self.__establecer_reglas() """
 
     
     #Metodos de control de flujo de datos
@@ -75,8 +75,8 @@ class Juego():
     def __registrar_ronda(self,ronda):
         self.__estadisticas.append(ronda)
 
-    #Metodos de visualizacion
-    def __mostrar_ganador_de_ronda(self,ronda:Ronda):
+#Metodos de visualizacion
+#    def __mostrar_ganador_de_ronda(self,ronda:Ronda):
         ganador,perdedor = ronda.ganador, ronda.perderdor
         
         
@@ -86,8 +86,8 @@ class Juego():
       
         print(f'\nLa ronda numero {self.__rondasJugadas + 1} la gana {ganador.get_nombre()} felicitaciones!!')
         print(f'\nLa proxima sera {perdedor.get_nombre()}')
-
-    def __mostrar_resultados(self,ronda):
+#
+#    def __mostrar_resultados(self,ronda):
         self.__mostrar_ganador_de_ronda(ronda)
 
         print(" ")
@@ -95,31 +95,31 @@ class Juego():
         print('CPU: ',self.__jugador2.get_puntaje())
         os.system('pause')
         os.system('cls')
-    
-    def __mostrar_estadisticas(self):
-        print('Resumen de la partida: \n')
-        for estadistica in self.__estadisticas :
-            estadistica:Ronda
-            ganador:Jugador=estadistica.ganador
-            print(f'En la ronda numero: {estadistica.numero+1}')
-            print(
-                f"La eleccion del Jugador fue {str(estadistica.eleccion_j1).upper()} y la de la CPU fue {str(estadistica.eleccion_j2).upper()}, "
-                f"por lo tanto el GANADOR es {ganador.get_nombre() if ganador is not None else 'nadie!!'}"
-                )
-            print('\n')
-
-    #Metodos de establecimientos de partida
-    def __establecer_rondas(self):
-        while True:
-            rondas = int(input('Cuantas rondas deseas jugar? '))
-            if(rondas > 0):
-                self.__rondasTotales = rondas
-                os.system('cls')
-                break    
-            else:
-                print("Ronda invalida")
-
-    def __establecer_empate(self):
+#    
+#    def __mostrar_estadisticas(self):
+#        print('Resumen de la partida: \n')
+#        for estadistica in self.__estadisticas :
+#            estadistica:Ronda
+#            ganador:Jugador=estadistica.ganador
+#            print(f'En la ronda numero: {estadistica.numero+1}')
+#            print(
+#                f"La eleccion del Jugador fue {str(estadistica.eleccion_j1).upper()} y la de la CPU fue {str(estadistica.eleccion_j2).upper()}, "
+#                f"por lo tanto el GANADOR es {ganador.get_nombre() if ganador is not None else 'nadie!!'}"
+#                )
+#            print('\n')
+#
+##Metodos de establecimientos de partida
+#def __establecer_rondas(self):
+#    while True:
+#        rondas = int(input('Cuantas rondas deseas jugar? '))
+#        if(rondas > 0):
+#            self.__rondasTotales = rondas
+#            os.system('cls')
+#            break    
+#        else:
+#            print("Ronda invalida")
+#
+#def __establecer_empate(self):
         while True:
             si_no_empate = input('Desea jugar con desempate SI-[S] NO-[N]: ').upper()
             if si_no_empate == 'S':
@@ -127,14 +127,28 @@ class Juego():
                 break
             elif si_no_empate == 'N':
                 break
-    
-    def __establecer_jugadores(self):
+#
+#def __establecer_jugadores(self):
         os.system("cls")
         self.__jugador1= JugadorHumano(input('Ingrese su nombre jugador: '))
         self.__jugador2= JugadorCPU()
         os.system("cls")
-
-    def __establecer_reglas(self):
+#
+#def __establecer_reglas(self):
         self.__establecer_rondas()
         self.__establecer_empate()        
- 
+    
+
+    #Estos se pueden parametrizar en un solo metodo
+    def asingar_jugadores(self,regJugador1:Jugador,regJugador2:Jugador):
+        self.__jugador1 = regJugador1
+        self.__jugador2 = regJugador2
+
+    
+    
+    def asignar_empate(self,opc):
+        self.__empate = opc
+
+    def asignar_rondasTotales(self,opc):
+        self.__rondasTotales = opc
+
