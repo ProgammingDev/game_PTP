@@ -1,3 +1,5 @@
+from __future__ import annotations  # 👈 al principio del archivo
+
 from ppt.core.jugador import Jugador
 from ppt.core.juego import Juego
 

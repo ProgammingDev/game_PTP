@@ -1,7 +1,10 @@
+
 import random
 from ppt.core.tipos import OpcionRespuesta
-from ppt.core.sala import Sala
+
 from abc import ABC, abstractmethod
+
+
 
 class Jugador(ABC):
     cantidad = 0
@@ -9,7 +12,7 @@ class Jugador(ABC):
     @abstractmethod
     def __init__(self, nombre):
         self.__nombre = nombre
-        historial:list[Sala]= []
+        historial:list= []
         self.__eleccionActual = {
             'opcion':'',
             'id':-1
