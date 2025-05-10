@@ -17,7 +17,7 @@ from service.rondaService import modificar_ronda_service
 from service.rondaService import buscar_ronda_service
 
 #Servicios de sala
-from service.salaService import agregar_sala_service
-from service.salaService import elimiar_sala_service
-from service.salaService import modificar_sala_service
-from service.salaService import buscar_sala_service
+from service.mesaService import agregar_mesa_service
+from service.mesaService import elimiar_mesa_service
+from service.mesaService import modificar_mesa_service
+from service.mesaService import buscar_mesa_service

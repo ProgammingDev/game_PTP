@@ -17,9 +17,9 @@ from controller.rondaController import obtener_ronda
 from controller.rondaController import remover_ronda
 
 #Importaciones de controladores para los endpoint sala
-from controller.salaController import agregar_sala
-from controller.salaController import modificar_sala
-from controller.salaController import obtener_sala
-from controller.salaController import remover_sala
+from controller.mesaController import agregar_mesa
+from controller.mesaController import modificar_mesa
+from controller.mesaController import obtener_mesa
+from controller.mesaController import remover_mesa
 
 

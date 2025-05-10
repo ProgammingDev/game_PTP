@@ -30,7 +30,7 @@ def buscar_jugador_service(id):
         jugador = GestorDeJugadores.obtener(id)
         if not jugador:
             return {
-                'ok':True,
+                'ok':False,
                 'mensaje':'Jugado no encontrado',
                 'data':None
             }
