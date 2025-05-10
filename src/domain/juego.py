@@ -84,8 +84,8 @@ class Juego():
           print('\nParicipantes empatados a jugar de nuevo!!!')
           return
       
-        print(f'\nLa ronda numero {self.__rondasJugadas + 1} la gana {ganador.get_nombre()} felicitaciones!!')
-        print(f'\nLa proxima sera {perdedor.get_nombre()}')
+        print(f'\nLa ronda numero {self.__rondasJugadas + 1} la gana {ganador.nombre()} felicitaciones!!')
+        print(f'\nLa proxima sera {perdedor.nombre()}')
 #
 #    def __mostrar_resultados(self,ronda):
         self.__mostrar_ganador_de_ronda(ronda)

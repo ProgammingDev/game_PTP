@@ -4,32 +4,34 @@ from infra.estado_global import GestorDeJugadores
 from domain.reglaMesa import ReglaMesa
 from domain.mesa import Mesa
 from domain.mesa import Jugador
+from domain.errores import JugadorNoEncontrado,MesaNoEncontrada
 # SERVICES
 # Contiene la lógica de negocio: qué pasa si un jugador se une, 
 # si una mesa se llena, si hay que crear algo.
 
-def agregar_mesa_service(data):
-    try:
-        
+def agregar_mesa_service(data):        
         id:int = data.get('id_jugador')
         reglas = data.get('reglas')
        
-
+        print('aaaaa')
         # Si el jugador no es encontrado responde la respuesta de buscar_jugador_service 
         jugador = GestorDeJugadores.obtener(id)
 
-        if jugador is None: return {'ok':False,'mensaje':'Jugador no encontrado','data':None} 
+        if jugador is None: raise JugadorNoEncontrado(id)
             
         # e:espectadores,tpr:tiempoPorRonda,m:modo,cj:cantidadJugadores
         e,tpr,m,cj = reglas.get('espectadores'),reglas.get('tiempoPorRonda'),reglas.get('modo'),reglas.get('cantidadJugadores')
+        print('a222aaaa')
         
         # Creamos reglas
         regla = ReglaMesa()
+
         # Asignamos las reglas que el usuario nos pide para la mesa ya que una mesa sin reglas no puede ser creada
-        regla.asignar_espectadores(e)
-        regla.asignar_tiempoPorRonda(tpr)
-        regla.asignar_modo(m)
-        regla.asignar_cantidadJugadores(cj)
+        regla.permitir_espectadores = e
+        regla.tiempo_por_ronda = tpr
+        regla.modo = m
+        regla.cantidad_max_de_jugadores = cj
+        print('111aaaaa')
         
         # Creamos la mesa
         mesa = GestorDeMesas.crear()
@@ -43,48 +45,28 @@ def agregar_mesa_service(data):
         #Agregamos el jugador principal osea el que creo la mesa
         mesa.agregar_jugador(jugador)
 
-        return {
-            'ok':True,
-            'mensaje':'La mesa fue creada con exito',
-            'data':mesa.to_dict()
-        }
-    
-    except (ValueError,TypeError) as e:
-        return{
-            'ok':False,
-            'mensaje':'Error inesperado',
-            'data': str(e)
-        }
+        return mesa
+       
+   
 
 # Queda hacer esta parte hay que agregar jugadores a una mesa el jugador se pasa por el body asi no filtrar los datos
 def agregar_jugador_a_mesa_service(id_mesa:int,id_jugador:int):
-    try:
-        jugador =GestorDeJugadores.obtener(id_jugador) 
-        print(jugador,'Es objeto?')
-        mesa = GestorDeMesas.obtener(id_mesa)
-        
-        # Validamos que el jugador y la mesa existan a la que se quiere unir si no existe devolvemos dicho mensaje
-        if (jugador is None) or (mesa is None): return {
-            'ok':False,
-            'mensaje':'La mesa o el jugador no fueron encontrada',
-            'data':None
-        }
-
-        # Una vez validado el jugador lo agregamos a la mesa
-        mesa.agregar_jugador(jugador)
-        
-        return {
-            'ok':True,
-            'mensaje':'El jugador fue agregado correctamente a la mesa',
-            'data':mesa.to_dict()
-        }
+    jugador, mesa = GestorDeJugadores.obtener(id_jugador), GestorDeMesas.obtener(id_mesa)
     
-    except(ValueError, TypeError) as e:
-        return{
-            'ok':False,
-            'mensaje':'Ocurrio un error inesperado',
-            'data':str(e)
-        }
+    # Validamos que el jugador exista si el jugador no existe lanzamos un error de jugador no encontrado
+    if (jugador is None) : raise JugadorNoEncontrado(id_jugador)
+
+    # Validamos que mesa exista si mesa no existe lanzamos un error de mesa no encontrada
+    if (mesa is None): raise MesaNoEncontrada(id_mesa)
+
+
+    # Intentamos agregar un jugador a la mesa
+    mesa.agregar_jugador(jugador)
+    
+    return mesa
+    
+
+       
     
     
 

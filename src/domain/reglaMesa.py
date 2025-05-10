@@ -1,26 +1,49 @@
 class ReglaMesa:
     def __init__(self):
-        self.espectadores = None
-        self.tiempoPorRonda = None
-        self.modo = None
-        self.cantidadJugadores=None
+        self.__permitir_espectadores:bool = False
+        self.__tiempo_por_ronda = 30
+        self.__modo = 'normal'
+        self.__cantidad_max_de_jugadores=2
 
-    def asignar_espectadores(self,hay_espectadores):
-        self.espectadores = hay_espectadores
-
-    def asignar_tiempoPorRonda(self,tiempo):
-        self.tiempoPorRonda = tiempo
-
-    def asignar_modo(self,modo):
-        self.modo = modo
+    @property
+    def permitir_espectadores(self):
+        return self.__permitir_espectadores
     
-    def asignar_cantidadJugadores(self,cantidadJugadores):
-        self.cantidadJugadores = cantidadJugadores
+    @permitir_espectadores.setter
+    def permitir_espectadores(self,nuevo_permitir_espectadores):
+       self.__permitir_espectadores = nuevo_permitir_espectadores
+       
+
+    @property
+    def tiempo_por_ronda(self):
+        return self.__tiempo_por_ronda
+    
+    @tiempo_por_ronda.setter
+    def tiempo_por_ronda(self,nuevo_tiempo_por_ronda):
+        self.__tiempo_por_ronda = nuevo_tiempo_por_ronda
+
+    @property
+    def modo(self):
+        return self.__modo
+    
+    @modo.setter
+    def modo(self,nuevo_modo):
+        self.__modo = nuevo_modo
+
+    @property
+    def cantidad_max_de_jugadores(self):
+        return self.__cantidad_max_de_jugadores
+    
+    @cantidad_max_de_jugadores.setter
+    def cantidad_max_de_jugadores(self,nueva_cantidad_max_de_jugadores):
+        self.__cantidad_max_de_jugadores = nueva_cantidad_max_de_jugadores
+
+
     
     def to_dict(self):
         return {
-            'espectadores':self.espectadores,
-            'tiempoPorRonda':self.tiempoPorRonda,
+            'espectadores':self.permitir_espectadores,
+            'tiempoPorRonda':self.tiempo_por_ronda,
             'modo':self.modo,
-            'cantidadJugadores':self.cantidadJugadores
+            'cantidadJugadores':self.cantidad_max_de_jugadores
         }
