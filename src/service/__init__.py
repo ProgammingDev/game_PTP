@@ -1,6 +1,6 @@
 #Servicios de jugador
 from service.jugadorService import agregar_jugador_service
-from service.jugadorService import elimiar_jugador_service
+from service.jugadorService import eliminar_jugador_service
 from service.jugadorService import modificar_jugador_service
 from service.jugadorService import buscar_jugador_service
 

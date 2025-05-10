@@ -1,28 +1,41 @@
 from __future__ import annotations  # 👈 al principio del archivo
+from domain.jugador import Jugador
 
-from ppt.core.jugador import Jugador
-from ppt.core.juego import Juego
-
-class Sala():
-    nro_sala:int= 0
+class Mesa():
+    nro_mesa:int= 0
 
     def __init__(self):
-        self.__jugador1:Jugador= None
-        self.__jugador2:Jugador = None
-        self.__juegoActivo:Juego= None
-        self.juegos:list[Juego] =None
-        self.turnoActual:int=0
+       id_mesa:int = 0
+       jugadores:list[Jugador]= []
+       juegoActual=None
+       reglasMesa=None
 
+
+    
+    def asignar_id(self,id):
+        self.id_mesa = id
+
+    def obtener_numero_de_mesas(cls):
+        return cls.nro_mesa
+    
 
     def asignar_jugador(self,regJugador:Jugador):
+        jugador_en_mesa = {
+            'jugador':None,
+            'listo':False
+        }
+
+        if(self.reglasMesa == None): return 'El campo reglas debe estar lleno'
+
+
         #Si existe lugar en alguno de los dos asientos osea Jugador1 o Jugador 2 lo inserta ahi si devuelve sala completa  
         if not self.__jugador1:
             self.__jugador1 = regJugador
-            return {"ok": True, "mensaje": "Jugador asignado como jugador 1"}
+            return self.__jugador1
         
         if self.__jugador2:
             self.__jugador2 = regJugador
-            return {"ok": True, "mensaje": "Jugador asignado como jugador 1"}
+            return 
          
         return {"ok": False, "mensaje": "Sala llena"}
     
