@@ -41,7 +41,7 @@ class GestorDeMesas(SistemaDeJuego):
         return mesa
     
     @classmethod
-    def obtener(cls,id):
+    def obtener(cls,id)-> Mesa | None:
         return cls.mesas.get(id)
     
     @classmethod
@@ -78,8 +78,9 @@ class GestorDeJugadores(SistemaDeJuego):
         return usuario
     
     @classmethod
-    def obtener(cls,id) -> Jugador | None:
-        return cls.personas.get(id)
+    def obtener(cls,id:int) -> Jugador | None:
+       
+        return cls.personas.get(int(id))
     
     @classmethod
     def eliminar(cls,id):

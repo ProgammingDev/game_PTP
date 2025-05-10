@@ -21,5 +21,6 @@ from controller.mesaController import agregar_mesa
 from controller.mesaController import modificar_mesa
 from controller.mesaController import obtener_mesa
 from controller.mesaController import remover_mesa
+from controller.mesaController import agregar_jugador_a_mesa
 
 

@@ -21,3 +21,4 @@ from service.mesaService import agregar_mesa_service
 from service.mesaService import elimiar_mesa_service
 from service.mesaService import modificar_mesa_service
 from service.mesaService import buscar_mesa_service
+from service.mesaService import agregar_jugador_a_mesa_service
