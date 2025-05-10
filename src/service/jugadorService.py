@@ -7,7 +7,7 @@ def agregar_jugador_service(nombre:str):
     try:
        
         jugador = GestorDeJugadores.crear()
-        jugador.set_nombre(nombre)
+        jugador.nombre = nombre
     
         return {
             'ok':True,
