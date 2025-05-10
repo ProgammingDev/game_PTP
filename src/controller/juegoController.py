@@ -1,5 +1,11 @@
 from service import agregar_juego_service,buscar_juego_service,modificar_juego_service,elimiar_juego_service
 
+
+
+#Controllers
+#Maneja la entrada (request) y salida (response). 
+#Traduce lo que el usuario pide a una acción de dominio, y empaqueta la respuesta.
+
 def agregar_juego():
     
     return agregar_juego_service()
