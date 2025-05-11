@@ -63,33 +63,26 @@ def agregar_jugador_a_mesa_service(id_mesa:int,id_jugador:int):
     return mesa
     
 
-       
-    
-    
-
-
-
 def buscar_mesa_service(id_mesa:int):
-    respuesta:None | Mesa= GestorDeMesas.obtener(id_mesa)
+    mesa:None | Mesa= GestorDeMesas.obtener(id_mesa)
 
-    if not respuesta : return {
-        'ok':False,
-        'mensaje':'Mesa no encontrada',
-        'data':None
-    } 
+    #Si la mesa es None significa que la mesa no se encontro por la cual devolvemos el mensaje MesaNoEncontrada 
+    if mesa is None: raise MesaNoEncontrada(id_mesa)
 
-    return {
-        'ok':True,
-        'mensaje':'Mesa encontrada',
-        'data':respuesta.to_dict()
-    }
+    return mesa
 
 
-def modificar_mesa_service(body):
+def listado_de_mesas_service(body):
+     mesas = GestorDeMesas.obtener_listado(body['limit'])
+     return mesas
+     
+
+
+def modificar_mesa_service(id_mesa:int):
     return ''
 
 
-def elimiar_mesa_service(body):
+def elimiar_mesa_service(id_mesa:int):
     return ''
 
     

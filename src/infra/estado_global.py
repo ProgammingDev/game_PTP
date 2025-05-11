@@ -10,13 +10,17 @@ class SistemaDeJuego(ABC):
         raise NotImplementedError('La funcion deberia ser implementada en una subclase')
     
     @abstractmethod
-    def obtener():
-        raise NotImplementedError('La funcion deberia ser implementada en una subclase')
-
-    @abstractmethod
     def eliminar():
         raise NotImplementedError('La funcion deberia ser implementada en una subclase')
 
+    @abstractmethod
+    def obtener():
+        raise NotImplementedError('La funcion deberia ser implementada en una subclase')
+
+
+    @abstractmethod
+    def obtener_listado():
+        raise NotImplementedError('La funcion deberia ser implementada en una subclase')
 
 
 class GestorDeMesas(SistemaDeJuego):
@@ -44,6 +48,11 @@ class GestorDeMesas(SistemaDeJuego):
     def obtener(cls,id)-> Mesa | None:
         return cls.mesas.get(id)
     
+    @classmethod
+    def obtener_listado(cls,limit):
+        return dict(list(cls.mesas.items())[:int(limit)])
+
+
     @classmethod
     def eliminar(cls,id):
         try:
