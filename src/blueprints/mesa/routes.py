@@ -12,7 +12,7 @@ mesa_bp.route('/add',methods=['POST'])(agregar_mesa)
 mesa_bp.route('/<int:id_mesa>/jugador',methods=['POST'])(agregar_jugador_a_mesa)
 
 # METODOS PUT
-mesa_bp.route('/:id',methods=['PUT'])(modificar_mesa)
+mesa_bp.route('/<int:id_mesa>',methods=['PUT'])(modificar_mesa)
 
 
 # METODOS DELETE

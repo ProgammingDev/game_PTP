@@ -4,10 +4,22 @@ from infra.estado_global import GestorDeJugadores
 from domain.reglaMesa import ReglaMesa
 from domain.mesa import Mesa
 from domain.mesa import Jugador
-from domain.errores import JugadorNoEncontrado,MesaNoEncontrada
+from domain.errores import JugadorNoEncontrado,MesaNoEncontrada, ReglasInexistentes
+from typing import TypedDict
+
+class ReglasDict(TypedDict, total=False):
+    permitir_espectadores:bool
+    tiempo_por_ronda:int
+    modo:str
+    cantidad_max_de_jugadores:int
+     
+
+
+
 # SERVICES
 # Contiene la lógica de negocio: qué pasa si un jugador se une, 
 # si una mesa se llena, si hay que crear algo.
+
 
 def agregar_mesa_service(data):        
         id:int = data.get('id_jugador')
@@ -78,8 +90,40 @@ def listado_de_mesas_service(body):
      
 
 
-def modificar_mesa_service(id_mesa:int):
-    return ''
+
+
+
+def modificar_mesa_service(id_mesa:int,data:ReglasDict):
+    mesa = GestorDeMesas.obtener(id_mesa)
+
+    # Si la mesa no es encontrada se devuelve un error
+    if mesa is None:
+         raise MesaNoEncontrada(id_mesa)
+    
+    # Verificamos que existan reglas antes de meternos 
+    if mesa.reglasMesa is None:
+         raise  ReglasInexistentes(id_mesa)
+    
+    # Obtenemos el objeto reglas de la mesa correspondiente
+    reglas = mesa.reglasMesa
+
+    # Si modo esta en el body que nos mandan lo cambiamos
+    if 'modo' in data:
+         reglas.modo = data['modo']
+
+    # Si tiempo_por_ronda esta en el body que nos mandan lo cambiamos    
+    if 'tiempo_por_ronda' in data:
+         reglas.tiempo_por_ronda = data['tiempo_por_ronda']
+    
+    # Si permitir_espectadores esta en el body que nos mandan lo cambiamos
+    if 'permitir_espectadores' in data:
+         reglas.permitir_espectadores = data['permitir_espectadores']
+    
+    #Si cantidad_max_de_jugadores esta en el body que nos mandan lo cambiamos
+    if  'cantidad_max_de_jugadores' in data:
+         reglas.cantidad_max_de_jugadores = data['cantidad_max_de_jugadores']
+         
+
 
 
 def elimiar_mesa_service(id_mesa:int):

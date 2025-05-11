@@ -20,6 +20,8 @@ class ReglaMesa:
     
     @tiempo_por_ronda.setter
     def tiempo_por_ronda(self,nuevo_tiempo_por_ronda):
+        if not nuevo_tiempo_por_ronda >= 30 : raise ValueError('El tiempo no puede ser menor a 30')
+
         self.__tiempo_por_ronda = nuevo_tiempo_por_ronda
 
     @property
@@ -36,6 +38,7 @@ class ReglaMesa:
     
     @cantidad_max_de_jugadores.setter
     def cantidad_max_de_jugadores(self,nueva_cantidad_max_de_jugadores):
+        if not nueva_cantidad_max_de_jugadores > 0 : raise ValueError('La cantidad de jugadores no puede ser menor a 1')
         self.__cantidad_max_de_jugadores = nueva_cantidad_max_de_jugadores
 
 

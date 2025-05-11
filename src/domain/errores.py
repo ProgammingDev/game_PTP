@@ -13,4 +13,7 @@ class JugadorNoEncontrado(Exception):
 class MesaNoEncontrada(Exception):
     def __init__(self,mesa_id):
         super().__init__(f'La mesa con id',mesa_id,'es inexistente')
-    
+
+class ReglasInexistentes(Exception):
+    def __init__(self,mesa_id):
+        super().__init__(f'La mesa {mesa_id} debe tener reglas ya asginadas')

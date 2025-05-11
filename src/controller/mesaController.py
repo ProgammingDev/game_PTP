@@ -131,7 +131,7 @@ def obtener_listado_de_mesas():
             'data':[j.to_dict()  for _ , j in mesas.items()]
         })
     
-    # Se devuelve este error cuando hubo un problema de codificiacion
+    # Se devuelve este error cuando hubo un problema de codifi ciacion
     except (ValueError,TypeError) as e:
          return jsonify({
             'ok':False,
@@ -140,9 +140,15 @@ def obtener_listado_de_mesas():
         }),500
 
 
-def remover_mesa():
+def remover_mesa(id_mesa:int):
    return ''
 
-def modificar_mesa():
-    return modificar_mesa_service()
+def modificar_mesa(id_mesa:int):
+    try:
+        data = request.get_json()
+        respuesta =  modificar_mesa_service(id_mesa,data)
+    except:
+        return
+
+    
 
